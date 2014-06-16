@@ -5,9 +5,11 @@ IR Remote Receiver  - Interrupt Driven
 
 This Library Uses 2x Interrupts - One Timer Interrupt, Signal Interrupt (low->high) & (high->low)
 
-/////////////////////////////////////////////////
+
 /// PLEASE NOTE - IMPORTANT FAQ         ////////
-////////////////////////////////////////////////
+
+
+
 // Define pins and timing variables in the IR_Sensor.h file// 
 
 IR INPUT = PIND
