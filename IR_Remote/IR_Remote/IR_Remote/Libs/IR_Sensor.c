@@ -144,7 +144,7 @@ ISR(INT0_vect){
 			
 			
 			_IR_PointProperties->_IR_Counter_Variable = 0;
-			_IR_PointProperties->_Delay_Variable =  ((_IR_PointProperties->_IR_Pulse_Time[2]+_IR_PointProperties->_IR_Pulse_Time[3]+_IR_PointProperties->_IR_Pulse_Time[4]) / 3 ) -15;
+			_IR_PointProperties->_Delay_Variable =  ((_IR_PointProperties->_IR_Pulse_Time[2]+_IR_PointProperties->_IR_Pulse_Time[3]+_IR_PointProperties->_IR_Pulse_Time[4]) / 3 ) -IR_Error_Tollerance_;
 			
 			for(_IR_PointProperties->_IR_Counter_Variable= 0; _IR_PointProperties->_IR_Counter_Variable< 16; _IR_PointProperties->_IR_Counter_Variable++)
 			_IR_PointProperties->_IR_Store_Input_Signal[_IR_PointProperties->_IR_Counter_Variable] = 0x0000;
@@ -152,22 +152,22 @@ ISR(INT0_vect){
 		}
 	}
 
-	// IR Start signal must be between 7ms & 19ms anything less & issues will be had
-	if (_IR_PointProperties->_Delay_Time > 200 && _IR_PointProperties->_Delay_Time < 3000 && CHECKBIT(IR_PIN_PORT, IRpin_PIN ) ){
+	// IR Start signal must be between 200 * 0x0065 = 1.3ms & 19.5ms anything less or more will be ignored // please configure manually 
+	if (_IR_PointProperties->_Delay_Time > IR_Initial_Low_Pulse_Minimum && _IR_PointProperties->_Delay_Time < IR_Initial_Low_Pulse_Maximum && CHECKBIT(IR_PIN_PORT, IRpin_PIN ) ){
 		_IR_PointProperties->_IR_Counter_Variable = 0;
 		_IR_PointProperties->_IR_Pulse_Time[0] = _IR_PointProperties->_Delay_Time;
 		_IR_PointProperties->_IR_Half_Pulse = ( _IR_PointProperties->_IR_Pulse_Time[0]/2);
 	}
 	
 	// Triggered only if current delay time = half previous delay
-	if (_IR_PointProperties->_Delay_Time <= (_IR_PointProperties->_IR_Half_Pulse +20)  && _IR_PointProperties->_Delay_Time >= (_IR_PointProperties->_IR_Half_Pulse-20) &&  !CHECKBIT(IR_PIN_PORT, IRpin_PIN ) ){
+	if (_IR_PointProperties->_Delay_Time <= (_IR_PointProperties->_IR_Half_Pulse +IR_Error_Tollerance_)  && _IR_PointProperties->_Delay_Time >= (_IR_PointProperties->_IR_Half_Pulse-IR_Error_Tollerance_) &&  !CHECKBIT(IR_PIN_PORT, IRpin_PIN ) ){
 		_IR_PointProperties->_IR_Pulse_Time[1] = _IR_PointProperties->_Delay_Time;
 		_IR_PointProperties->_IR_Status_Trigger = 0x01;
 	}
 	
 	
 	// If delay is larger than 19 ms reset all values
-	if (_IR_PointProperties->_Delay_Time > 3200){
+	if (_IR_PointProperties->_Delay_Time > IR_Initial_Low_Pulse_Maximum){
 		_IR_PointProperties->_IR_Status_Trigger = 0;
 		_IR_PointProperties->_IR_Counter_Variable = 0;
 		_IR_PointProperties->_IR_Array_Binary_Counter_ = 0;

@@ -21,14 +21,21 @@
 #include "../Atmega_Libs/AtmegaPins.h"
 #include "../Atmega_Libs/Serial_Atmel328p.h"
 
-#define IR_Input PORTD2 // input for ir
+// Define Signal Paramaters here 
+#define IR_Initial_Low_Pulse_Minimum	200
+#define IR_Initial_Low_Pulse_Maximum	3000   // Values are multiples of 0.0065ms 
+#define IR_Error_Tollerance_			20 // Not a percentage value but a value in 0.0065ms // its usually a good idea to have a value around 15-20
 
+// Define IR Input here
+#define IR_Input PORTD2 // input for ir
 #define IR_PIN_DDR DDRD   // data direction port for the pins
 #define IR_PORT PORTD
 #define IR_PIN_PORT PIND
 
 #define IRpin_PIN      PIND2
 #define IRpin          2
+//
+
 
 
 #define ANY_LOGIC_CHANGE 	EICRA |= (1 << ISC00) & ~(1 << ISC01);    // set INT0 to trigger on ANY logic change

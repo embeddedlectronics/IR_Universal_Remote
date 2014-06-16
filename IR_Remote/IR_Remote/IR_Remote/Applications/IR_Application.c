@@ -17,6 +17,7 @@ void IR_Determine_Signal_Length(void){
 void IR_Compare_Signal_Application(void){
 	struct _IR_Signal *_IR_PointProperties= &Properties;
 	char _IR_Remote_Button_Array_Length =0;
+	char _Incorrect_Count=0; 
 	printf("\n\r Remote Control Button Detection Compare \n\r ------------------------------------\n\r ");
 	
 	IR_Application_Init();
@@ -29,15 +30,29 @@ void IR_Compare_Signal_Application(void){
 	while(1){
 		
 		if (_IR_PointProperties->_IR_Read_State){
+			_Incorrect_Count =0;
 			
-			for (char x= 0; x < _IR_Remote_Button_Array_Length; x++ )
-			/// Compares the input signal stored with the Button array
-			if (IR_Compare( _IR_PointProperties->_IR_Store_Input_Signal, _IR_Remote_Buttons[x])) 
-			{
-				printf(" \n\r Button %d Pressed! ", x);  // Upon the return of 1 the Button pressed signal matches the Stored Button Signal
-				_IR_PointProperties->_IR_Read_State =0; // Global Flag used
+			for (char x= 0; x < _IR_Remote_Button_Array_Length; x++ ){
+				/// Compares the input signal stored with the Button array
+				if (IR_Compare( _IR_PointProperties->_IR_Store_Input_Signal, _IR_Remote_Buttons[x])) 
+				{
+					printf(" \n\r Button %d Pressed! ", x);  // Upon the return of 1 the Button pressed signal matches the Stored Button Signal
+					_IR_PointProperties->_IR_Read_State =0; // Global Flag used
+				
+				}
+				
+				else
+					_Incorrect_Count++; 
+					
+				if(_Incorrect_Count == (_IR_Remote_Button_Array_Length)){
+					printf(" \n\r Not A Recognized Button\n\r ");  
+					for(char _count=0; _count < (_IR_PointProperties->_IR_Clock_Pulses/16)+1; _count++) // prints out recoreded signal
+						printf(" 0x%x, \n\r", _IR_PointProperties->_IR_Store_Input_Signal[_count]);
+					
+				
+					_IR_PointProperties->_IR_Read_State =0; // Global Flag used
+				}
 			}
-			
 		}
 		
 		
