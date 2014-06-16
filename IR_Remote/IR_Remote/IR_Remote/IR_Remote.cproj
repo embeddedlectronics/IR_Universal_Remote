@@ -37,6 +37,8 @@
         </dependencies>
       </framework-data>
     </AsfFrameworkConfig>
+    <avrtool />
+    <avrtoolinterface />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -93,19 +95,13 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Applications\IR_Application.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Applications\IR_Application.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Atmega_Libs\AtmegaPins.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Atmega_Libs\I2C.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Atmega_Libs\I2C.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Atmega_Libs\Macros_Functions.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Atmega_Libs\Macros_Functions.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Atmega_Libs\Serial_Atmel328p.c">
@@ -114,37 +110,7 @@
     <Compile Include="Atmega_Libs\Serial_Atmel328p.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="ClockMemLibs\Dalas_One_Wire.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\Dalas_One_Wire.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\DS1307.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\DS1307.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\DS18B20.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\DS18B20.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\_AA2432A.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="ClockMemLibs\_AA2432A.h">
-      <SubType>compile</SubType>
-    </Compile>
     <Compile Include="IR_Remote.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Libs\HD44780.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Libs\HD44780.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Libs\IR_Sensor.c">
@@ -153,17 +119,11 @@
     <Compile Include="Libs\IR_Sensor.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="Libs\_74HC164.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Libs\_74HC164.h">
-      <SubType>compile</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Atmega_Libs" />
     <Folder Include="Libs" />
-    <Folder Include="ClockMemLibs" />
+    <Folder Include="Applications" />
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
