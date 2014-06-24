@@ -73,7 +73,6 @@ int _IR_Remote_Buttons[4][9];
 
 char IR_Compare(int *_IR_Input, int * _Existing_Code); 
 void IR_Initalize(void);
-void IR_Analyze(void);
 
 
 
